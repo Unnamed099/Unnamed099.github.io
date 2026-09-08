@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>页面</title>
+</head>
+<body>
+  <script>
+    // 先默认设置为 CDN
+    window.FP = 'https://phys-1315105331.cos.ap-nanjing.myqcloud.com/';
+    
+    // 尝试加载 test.js 检测 CDN 是否可用
+    const testScript = document.createElement('script');
+    testScript.src = window.FP + 'test.js';
+    
+    testScript.onload = function() {
+      // CDN 可用，继续使用 CDN
+      loadPage(window.FP);
+    };
+    
+    testScript.onerror = function() {
+      // CDN 不可用，改用本地
+      window.FP = '';
+      loadPage(window.FP);
+    };
+    
+    document.head.appendChild(testScript);
+    
+    function loadPage(fp) {
+      const params = new URLSearchParams(location.search);
+      const file = params.get('file') || fp + 'home.js';
+      const script = document.createElement('script');
+      script.src = file;
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+{
+    "tutorials": [
+        {
+            "id": 1,
+            "title": "HTML5 从入门到精通",
+            "desc": "系统学习 HTML5 标签、语义化、表单、Canvas、SVG 等核心知识。",
+            "icon": "🌐",
+            "category": "frontend",
+            "tags": ["HTML5", "基础", "入门"],
+            "badge": "热门",
+            "badgeType": "hot",
+            "progress": 80
+        },
+        {
+            "id": 2,
+            "title": "CSS3 进阶与实战",
+            "desc": "Flexbox、Grid、动画、响应式设计、CSS 变量等现代 CSS 技术。",
+            "icon": "🎨",
+            "category": "frontend",
+            "tags": ["CSS3", "进阶", "实战"],
+            "badge": "新",
+            "badgeType": "new",
+            "progress": 60
+        },
+        {
+            "id": 3,
+            "title": "JavaScript 核心原理",
+            "desc": "闭包、原型链、异步编程、ES6+、设计模式，深入理解 JS。",
+            "icon": "⚡",
+            "category": "frontend",
+            "tags": ["JavaScript", "核心", "进阶"],
+            "badge": "热门",
+            "badgeType": "hot",
+            "progress": 45
+        },
+        {
+            "id": 4,
+            "title": "Vue.js 全家桶实战",
+            "desc": "Vue 3 + Vite + Pinia + Vue Router，从零搭建企业级项目。",
+            "icon": "🟢",
+            "category": "frontend",
+            "tags": ["Vue", "框架", "实战"],
+            "badge": "新",
+            "badgeType": "new",
+            "progress": 20
+        },
+        {
+            "id": 5,
+            "title": "React 18 完全指南",
+            "desc": "Hooks、Context、Redux、Next.js，现代 React 开发全栈。",
+            "icon": "⚛️",
+            "category": "frontend",
+            "tags": ["React", "框架", "高阶"],
+            "badge": "进阶",
+            "badgeType": "advanced",
+            "progress": 10
+        },
+        {
+            "id": 6,
+            "title": "Python 基础与爬虫",
+            "desc": "Python 语法、面向对象、网络请求、BeautifulSoup、Scrapy。",
+            "icon": "🐍",
+            "category": "backend",
+            "tags": ["Python", "爬虫", "入门"],
+            "badge": "热门",
+            "badgeType": "hot",
+            "progress": 90
+        },
+        {
+            "id": 7,
+            "title": "Node.js 后端开发",
+            "desc": "Express、Koa、数据库、JWT、部署，构建 RESTful API。",
+            "icon": "🟩",
+            "category": "backend",
+            "tags": ["Node.js", "后端", "实战"],
+            "badge": "",
+            "badgeType": "",
+            "progress": 55
+        },
+        {
+            "id": 8,
+            "title": "Java Spring Boot 微服务",
+            "desc": "Spring Boot、Spring Cloud、Docker、Kubernetes 微服务架构。",
+            "icon": "☕",
+            "category": "backend",
+            "tags": ["Java", "Spring", "微服务"],
+            "badge": "进阶",
+            "badgeType": "advanced",
+            "progress": 30
+        },
+        {
+            "id": 9,
+            "title": "MySQL 数据库设计",
+            "desc": "SQL 语句、索引优化、事务隔离、主从复制、分库分表。",
+            "icon": "🐬",
+            "category": "database",
+            "tags": ["MySQL", "SQL", "优化"],
+            "badge": "热门",
+            "badgeType": "hot",
+            "progress": 75
+        },
+        {
+            "id": 10,
+            "title": "MongoDB 从零到实战",
+            "desc": "文档模型、聚合管道、索引、复制集、分片集群。",
+            "icon": "🍃",
+            "category": "database",
+            "tags": ["MongoDB", "NoSQL", "进阶"],
+            "badge": "新",
+            "badgeType": "new",
+            "progress": 15
+        },
+        {
+            "id": 11,
+            "title": "Redis 缓存与高并发",
+            "desc": "数据结构、持久化、哨兵、集群、分布式锁、缓存策略。",
+            "icon": "🔴",
+            "category": "database",
+            "tags": ["Redis", "缓存", "高并发"],
+            "badge": "",
+            "badgeType": "",
+            "progress": 40
+        },
+        {
+            "id": 12,
+            "title": "Docker 容器化实战",
+            "desc": "Docker 基础、Dockerfile、Compose、Swarm、Kubernetes。",
+            "icon": "🐳",
+            "category": "devops",
+            "tags": ["Docker", "容器", "运维"],
+            "badge": "热门",
+            "badgeType": "hot",
+            "progress": 65
+        },
+        {
+            "id": 13,
+            "title": "Linux 系统运维入门",
+            "desc": "常用命令、Shell 脚本、网络配置、系统监控、安全加固。",
+            "icon": "🐧",
+            "category": "devops",
+            "tags": ["Linux", "运维", "基础"],
+            "badge": "",
+            "badgeType": "",
+            "progress": 50
+        },
+        {
+            "id": 14,
+            "title": "机器学习入门实战",
+            "desc": "线性回归、决策树、SVM、神经网络、Scikit-learn 实战。",
+            "icon": "🤖",
+            "category": "ai",
+            "tags": ["机器学习", "AI", "入门"],
+            "badge": "新",
+            "badgeType": "new",
+            "progress": 25
+        },
+        {
+            "id": 15,
+            "title": "PyTorch 深度学习",
+            "desc": "张量、自动求导、CNN、RNN、Transformer、模型部署。",
+            "icon": "🔥",
+            "category": "ai",
+            "tags": ["PyTorch", "深度学习", "进阶"],
+            "badge": "进阶",
+            "badgeType": "advanced",
+            "progress": 8
+        }
+    ]
+}
