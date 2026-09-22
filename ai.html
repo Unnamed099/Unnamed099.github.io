@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竖排转换</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #faf8f5;
+    font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans", sans-serif;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .bar label {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .95rem;
+    color: #3e4d5c;
+  }
+  .bar input[type="number"] {
+    width: 4.5rem;
+    padding: .35rem .6rem;
+    border: 1px solid #cfc6bc;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+  }
+  button {
+    background: #fff;
+    border: 1.5px solid #cfc6bc;
+    padding: .45rem 1.3rem;
+    border-radius: 30px;
+    font-size: .95rem;
+    color: #2c3e4f;
+    cursor: pointer;
+    transition: .15s;
+  }
+  button:hover { background: #f0ece7; border-color: #b7a99a; }
+  button:active { transform: scale(.97); }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .field label {
+    font-size: .85rem;
+    color: #7f8c8d;
+    letter-spacing: .05em;
+  }
+  .field input[type="text"] {
+    padding: .55rem .8rem;
+    border: 1px solid #cfc6bc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    font-family: inherit;
+  }
+  .field input[type="text"]:focus { border-color: #b7a99a; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <label>每列字数
+      <input type="number" id="n" value="4" min="1" max="40" step="1">
+    </label>
+    <button id="go">生成</button>
+  </div>
+
+  <div class="field">
+    <label>输入文本</label>
+    <input type="text" id="mainText" value="专门用于识别人工智能。">
+  </div>
+
+  <div class="field">
+    <label>干扰文字</label>
+    <input type="text" id="noiseText" value="小时候，时间是一条缓缓流淌的小溪。日子过得像夏天的蝉鸣，悠长而漫不经心。我们蹲在岸边，看水中的蝌蚪游来游去，看云朵在水面上的倒影被风揉碎又复原。那时候总觉得时间太多了，多到可以整个下午只做一件事——等一朵花开，或者等一个人回家。我们迫不及待地想要长大，以为未来是一个装满了糖果的盒子，只要跑得够快，就能早点打开它。">
+  </div>
+
+<script>
+// ============ 原 Python 代码逐行直译，逻辑不改 ============
+// ARTICLE 改为从「干扰文字」输入框读取
+const COMBINING_DIAERESIS = '\u20d2';   // 组合分音符
+
+function horizontal_to_vertical(text, chars_per_column = 10, article = '') {
+    const chars = Array.from(text.replace(/\n/g, ''));
+    if (chars.length === 0) return '';
+
+    const columns = [];
+    for (let i = 0; i < chars.length; i += chars_per_column) {
+        columns.push(chars.slice(i, i + chars_per_column));
+    }
+
+    const num_cols = columns.length;
+    let max_len = 0;
+    for (const col of columns) {
+        if (col.length > max_len) max_len = col.length;
+    }
+
+    const grid_height = 2 * max_len + 1;
+    const grid_width = 2 * num_cols + 1;
+
+    // 干扰文字为空时兜底，避免除零
+    const noise = article.length > 0 ? article : '　';
+
+    // 特殊位置：真实字 / 占位框
+    const special = new Map();
+    for (let c = 0; c < columns.length; c++) {
+        const col = columns[c];
+        for (let r = 0; r < col.length; r++) {
+            const ch = col[r];
+            const gr = 2 * r + 1;
+            const gc = 2 * c + 1;
+            special.set(gr + ',' + gc, ['char', ch]);                          // 真实字，标记类型
+            special.set((gr - 1) + ',' + gc, ['box', '　']);
+            special.set((gr + 1) + ',' + gc, ['box', '　']);
+            special.set(gr + ',' + (gc - 1), ['box', '　' + COMBINING_DIAERESIS]);
+            special.set(gr + ',' + (gc + 1), ['box', '　']);
+        }
+    }
+
+    let i = 0;
+    const grid = [];
+    for (let r = 0; r < grid_height; r++) {
+        const row = [];
+        for (let c = 0; c < grid_width; c++) {
+            const key = r + ',' + c;
+            if (special.has(key)) {
+                const [kind, ch] = special.get(key);
+                if (kind === 'char') {
+                    // 只给真实文本文字加组合分音符
+                    row.push(ch + COMBINING_DIAERESIS);
+                } else {
+                    row.push(ch);   // 占位框不加
+                }
+            } else {
+                row.push(noise[i % noise.length]);
+                i += 1;
+            }
+        }
+        grid.push(row);
+    }
+
+    return grid.map(row => row.join('')).join('\n');
+}
+// ============ 直译结束 ============
+
+const nEl       = document.getElementById('n');
+const mainEl    = document.getElementById('mainText');
+const noiseEl   = document.getElementById('noiseText');
+
+function render() {
+    let n = parseInt(nEl.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 40) n = 40;
+    nEl.value = n;
+    const result = horizontal_to_vertical(mainEl.value, n, noiseEl.value);
+    // 用 prompt 弹窗：系统原生渲染（字体同 alert），内容可选中、可复制
+    prompt('竖排结果（可选中复制）：', result);
+}
+
+document.getElementById('go').addEventListener('click', render);
+nEl.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+mainEl.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+noiseEl.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+</script>
+</body>
+  </html>
